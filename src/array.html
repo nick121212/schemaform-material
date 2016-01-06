@@ -1,36 +1,59 @@
-<div  class="schema-form-array {{form.htmlClass}}"
-      sf-field-model="sf-new-array"
-      sf-new-array>
-  <label class="control-label" ng-show="showTitle()">{{ form.title }}</label>
-  <md-list class="list-group" sf-field-model ui-sortable="form.sortOptions">
-    <md-list-item layout="row" class="list-group-item"
-             sf-field-model="ng-repeat"
-             ng-repeat="item in modelArray track by $index"
-             schema-form-array-items
-             class="{{form.fieldHtmlClass}}">
-      <md-button flex="none" flex-order="2"
-                 type="button"
-                 ng-hide="form.readonly || form.remove === null"
-                 ng-click="deleteFromArray($index)"
-                 ng-disabled="form.schema.minItems >= modelArray.length"
-                 class="md-icon-button" aria-label="More"
-                 style="position: relative; z-index: 20;">
-        <md-icon>close</md-icon>
-      </md-button>
-    </md-list-item>
-  </md-list>
-  <div class="clearfix" style="padding: 15px;" ng-model="modelArray" schema-validate="form">
-    <div class="help-block"
-         ng-show="(hasError() && errorMessage(schemaError())) || form.description"
-         ng-bind-html="(hasError() && errorMessage(schemaError())) || form.description"></div>
+<!--<div sf-array="form" class="schema-form-array {{form.htmlClass}}"-->
+<!--ng-model="$$value$$" ng-model-options="form.ngModelOptions">-->
 
-    <md-button ng-hide="form.readonly || form.add === null"
-            ng-click="appendToArray()"
-            ng-disabled="form.schema.maxItems <= modelArray.length"
-            type="button"
-            class="btn md-raised md-primary {{ form.style.add || 'btn-default' }} pull-right">
-      <i class="glyphicon glyphicon-plus"></i>
-      {{ form.add || 'Add'}}
-    </md-button>
-  </div>
+<div class="schema-form-{{form.type}} {{form.htmlClass}}"
+     md-theme="dark"
+     sf-field-model="sf-new-array"
+     sf-new-array="$$value$$">
+    <div layout="row" style="padding: 0;" class="md-toolbar-tools">
+        <label class="control-label" flex ng-show="showTitle()">{{ form.title }}</label>
+        <md-button class="md-icon-button"
+                   aria-label="add"
+                   ng-if="!modelArray || modelArray.length==0"
+                   ng-hide="form.readonly || form.add === null"
+                   ng-click="appendToArray()"
+                   ng-disabled="form.schema.maxItems <= modelArray.length">
+            <ng-md-icon icon="add"></ng-md-icon>
+        </md-button>
+    </div>
+    <md-list class="list-group"
+             ng-model="modelArray"
+             ui-sortable="form.sortOptions">
+        <md-list-item layout="row" layout-padding class="list-group-item md-whiteframe-3dp"
+                      ng-repeat="item in modelArray track by $index">
+            <md-content flex class="{{form.fieldHtmlClass}}">
+                <label style="margin: 5px;">{{ (form.subTitle || form.title) + ($index+1) }}</label>
+
+                <sf-decorator ng-init="arrayIndex = $index; sectionClass = form.sectionClass" flex
+                              form="copyWithIndex($index)"></sf-decorator>
+            </md-content>
+            <md-content layout="column" flex="none" flex-order="2">
+                <md-button class="md-icon-button"
+                           aria-label="remove"
+                           ng-hide="form.readonly || form.remove === null"
+                           ng-click="deleteFromArray($index)"
+                           ng-disabled="form.schema.minItems >= modelArray.length">
+                    <ng-md-icon icon="delete"></ng-md-icon>
+                </md-button>
+                <md-button class="md-icon-button"
+                           aria-label="add"
+                           ng-hide="form.readonly || form.add === null"
+                           ng-click="appendToArray()"
+                           ng-disabled="form.schema.maxItems <= modelArray.length">
+                    <ng-md-icon icon="add"></ng-md-icon>
+                </md-button>
+            </md-content>
+        </md-list-item>
+    </md-list>
+    <!--{{ ngModel.$error }}-->
+    <!--<md-input-container style="padding: 0;"-->
+                        <!--name="{{form.key|sfCamelKey}}"-->
+                        <!--schema-validate="form"-->
+                        <!--ng-model="modelArray"-->
+                        <!--md-is-error="!$root.isEmptyObject(ngModel.$error)">-->
+        <!--<div ng-messages="ngModel.$error">-->
+            <!--<div sf-message ng-message></div>-->
+        <!--</div>-->
+        <!--<div class="md-char-counter">{{ form.description }}</div>-->
+    <!--</md-input-container>-->
 </div>

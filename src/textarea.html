@@ -1,10 +1,18 @@
-<md-input-container class="{{::form.htmlClass}} schema-form-textarea" sf-messages>
+<md-input-container class="{{::form.htmlClass}} schema-form-textarea"
+                    md-is-error="!$root.isEmptyObject(ngModel.$error)">
   <label ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</label>
   <textarea ng-class="::form.fieldHtmlClass"
             id="{{::form.key|sfCamelKey}}"
             sf-changed="form"
             ng-disabled="::form.readonly"
             sf-field-model
+            md-maxlength="form.maxLength"
             schema-validate="form"
+            rows="{{ form.rows }}"
+            cols="{{ form.cols }}"
             name="{{::form.key|sfCamelKey}}"></textarea>
+  <div ng-messages="ngModel.$error">
+    <div sf-message ng-message></div>
+  </div>
+  <div class="md-char-counter">{{ form.description }}</div>
 </md-input-container>

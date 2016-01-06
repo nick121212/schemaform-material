@@ -1,17 +1,22 @@
 <div sf-array="form" sf-field-model
      class="form-group schema-form-checkboxes {{::form.htmlClass}}"
-     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}"
      sf-messages>
-  <label class="control-label" ng-show="showTitle()">{{::form.title}}</label>
-  <div class="checkbox" ng-repeat="val in titleMapValues track by $index" >
-    <md-checkbox ng-model="titleMapValues[$index]"
-                 sf-changed="form"
-                 ng-disabled="::form.readonly"
-                 name="{{::form.key|sfCamelKey}}"
-                 ng-true-value="true"
-                 ng-false-value="false"
-                 aria-label="{{::form.title}}">
-      {{::form.titleMap[$index].name}}
-    </md-checkbox>
+
+  <div layout="row" style="padding: 0;" class="md-toolbar-tools">
+    <label class="control-label" flex ng-show="showTitle()">{{ form.title }}</label>
   </div>
+
+  <md-content ng-class="form.fieldHtmlClass">
+    <div class="checkbox" ng-repeat="val in titleMapValues track by $index" >
+      <md-checkbox ng-model="titleMapValues[$index]"
+                   sf-changed="form"
+                   ng-disabled="::form.readonly"
+                   name="{{::form.key|sfCamelKey}}"
+                   ng-true-value="true"
+                   ng-false-value="false"
+                   aria-label="{{::form.title}}">
+        {{::form.titleMap[$index].name}}
+      </md-checkbox>
+    </div>
+  </md-content>
 </div>

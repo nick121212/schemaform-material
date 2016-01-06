@@ -1,33 +1,22 @@
-<md-input-container class="schema-form-{{::form.type}} {{::form.htmlClass}}"
-                    ng-class="{'md-input-has-value': model['{{form.key.join('\'][\'')}}']}"
-                    sf-messages sf-layout>
-  <label  ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</label>
-<!--
-  <input ng-if="!form.fieldAddonLeft && !form.fieldAddonRight"
-         ng-show="form.key"
-         type="{{form.type}}"
-         step="any"
-         sf-changed="form"
-         placeholder="{{form.placeholder}}"
-         class="form-control {{form.fieldHtmlClass}}"
-         id="{{form.key.slice(-1)[0]}}"
-         ng-model-options="form.ngModelOptions"
-         ng-model="$$value$$"
-         ng-disabled="form.readonly"
-         schema-validate="form"
-         name="{{form.key.slice(-1)[0]}}"
-         aria-describedby="{{form.key.slice(-1)[0] + 'Status'}}">
--->
-  <input sf-field-model
-         ng-show="::form.key"
-         type="{{::form.type}}"
-         step="any"
-         sf-changed="form"
-         id="{{::form.key|sfCamelKey}}"
-         ng-class="::form.fieldHtmlClass"
-         sf-type-parser="form.schema"
-         ng-disabled="::form.readonly"
-         schema-validate="form"
-         name="{{::form.key|sfCamelKey}}"
-         aria-describedby="{{::form.key|sfCamelKey}}Status" />
+<md-input-container class="schema-form-input md-block"
+                    md-is-error="!$root.isEmptyObject(ngModel.$error)"
+                    ng-class="::form.htmlClass"
+                    sf-layout
+                    aria-label="{{ ::form.title }}">
+    <md-icon ng-if="form.icon">
+        <ng-md-icon style="{{form.icon.style}}" icon="{{ form.icon.icon }}"></ng-md-icon>
+    </md-icon>
+    <label ng-show="showTitle()">{{::form.title}}</label>
+    <input sf-field-model
+           ng-model="$$value$$"
+           schema-validate="form"
+           type="{{form.type}}"
+           aria-label="{{ form.title }}"
+           ng-class="form.fieldHtmlClass"
+           ng-disabled="form.readonly"
+           name="{{form.key|sfCamelKey}}">
+    <div ng-messages="ngModel.$error">
+        <div sf-message ng-message></div>
+    </div>
+    <div class="md-char-counter">{{ form.description }}</div>
 </md-input-container>
