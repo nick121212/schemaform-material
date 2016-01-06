@@ -2,7 +2,7 @@
   "name": "angular-schema-form-material",
   "version": "1.0.0",
   "authors": [
-    "David Jensen <david.lgj@gmail.com>"
+    "NICK <nick121212@126.com>"
   ],
   "description": "Angular Material decorator for Angular Schema Form",
   "main": "material-decorator.min.js",
